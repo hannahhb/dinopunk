@@ -1,7 +1,7 @@
-**/images
-**/videos
-**/audio
-**/gui
+/images
+/videos
+/audio
+/gui
 *.png
 *.mp3
 *.webp
