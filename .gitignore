@@ -2,3 +2,7 @@
 **/videos
 **/audio
 **/gui
+*.png
+*.mp3
+*.webp
+*.webm
