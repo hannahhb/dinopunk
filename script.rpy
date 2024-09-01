@@ -1,19 +1,20 @@
 # Define characters
 define n = Character("Narrator")
 
-define trebble = Character("Trebble")
-
+define trebble = Character("Trebble", what_slow_cps=20)
 # Define images and video
 image bg black = "#000"
 # image bg wasteland = im.scale
-image bg melbournex_ruins = im.Scale("images/wilderness_city.webp", 1920, 1080)
+image bg melbournex_ruins = im.Scale("images/wilderness_city.jpeg", 1920, 1080)
 image bg wilderness = im.Scale("images/wilderness.png", 1920, 1080)
 image bg nest_with_eggs = im.Scale("images/wilderness_eggs.png", 1920, 1080)
 
 # image bg nest_with_eggs = "images/nest_with_eggs.jpg"
 image bg room = "images/room.jpg"
 image bg map = "images/melb.png"
-
+image bg east = im.Scale("images/city_wetlands.jpg", 1920, 1080)
+image bg cbd = im.Scale("images/city_moody.jpg", 1920, 1080) 
+image bg west = im.Scale("images/city_west.jpg", 1920, 1080) 
 # image narrator = "images/science_officer.webp"
 # image trevor concerned = "images/trevor_concerned.webp"
 image khopesh_sword = "images/khopesh_sword.png"
@@ -35,7 +36,7 @@ default has_flamethrower = False
 
 # Define video
 $ renpy.movie_cutscene("videos/intro_dinopunk.webm")
-$ renpy.movie_cutscene("videos/dino_cut_scene.mp4")
+$ renpy.movie_cutscene("videos/cbd_cut_scene.mp4")
 transform trebble_left_large:
     xpos 50
     ypos 150
@@ -43,6 +44,7 @@ transform trebble_left_large:
 
 # Define audio
 define audio.bg_music = "audio/dinopunk_song1.mp3"
+# define audio.bg_music_2 = "audio/mysterious_music.mp3"
 
 # Define the swirling transformation
 transform swirl_move:
@@ -57,17 +59,6 @@ transform swirl_move:
     linear 0.2 zoom 0.1 alpha 0
 
 
-# transform fire:
-#     linear 0.1 alpha 0.8
-#     linear 0.1 alpha 1.0
-#     repeat
-
-# Define a transformation for a larger image size and positioning
-# transform trebble_left:
-#     xpos 0.1
-#     ypos 0.1
-#     zoom 1.5
-
 screen progress_bar_screen():
     # Coin Progress Bar
     hbox:
@@ -76,7 +67,7 @@ screen progress_bar_screen():
     # Population
         text "Population: [population]" xpos 0.55 ypos 0.05
         bar value population range 50 xpos 0.7 ypos 0.05 xmaximum 300 ymaximum 20
-  
+
 screen weapon_hud():
     hbox:
         xpos 0.75
@@ -211,8 +202,6 @@ label start:
     trebble "(chuckles)"
     trebble "Ah that's the spirit!"
 
-    # Show the HUD with the Khopesh sword
-
     # Switch to new background showing the nest
     scene bg nest_with_eggs with dissolve
 
@@ -235,31 +224,11 @@ label start:
 
     #FIX THIS SCRIPT
     if result == "strike":
-        $ combat_result = "won"
         "You draw your khopesh and prepare to strike."
         play sound "audio/sword_effect.mp3"
-
-        # Show the khopesh swirling toward the Megalania and disappearing
         show khopesh_sword at swirl_move
-
         "The khopesh strikes the Megalania, sinking deep into its neck."
         
-       
-        show red_flash
-        "Megalania falls to the ground, strikes YOU then scurries away."
-        trebble "It’s gone! Destroy the nest before it comes back."
-        # show 
-        play sound "audio/fire_effect.mp3"
-        #ADD FLATHROWER SOUND EFFECT
-
-        show fire_animation at trebble_left_large
-        pause 3
-        # Hide the fire image
-        hide fire_animation
-
-        show nest_burning
-        $ has_flamethrower = True
-
     if result == "call_help":
         play audio "audio/Uuhhh.oga"
         $ population -= 2
@@ -268,21 +237,40 @@ label start:
         pause 3
         # Hide the fire image
         hide dying_a
-        trebble "naoiusniuaodnosanbdioa"
-        
-    hide megalania 
+
     if result == "run":
-        trebble "naoiusniuaodnosanbdioa"
+
+        $ renpy.movie_cutscene("videos/death_chase.webm")
+        trebble "poor kid should have chosen better.."
+        $ renpy.movie_cutscene("videos/outro.webm")
+
+        #add credit
+        return 
+
+    hide megalania
+    
+    show red_flash
+    "Megalania falls to the ground, strikes YOU then scurries away."
+    trebble "It’s gone! Destroy the nest before it comes back."
+    
+    play sound "audio/fire_effect.mp3"
+    show fire_animation at trebble_left_large
+    pause 3
+    hide fire_animation
+
+    show nest_burning
+    $ has_flamethrower = True
+    
+    show trebble gun at left
+    trebble "You realize you don’t always have to fight with your old ass sword?"
+    trebble "(pulls out the glock) This would do a better job!"
+    $ has_gun = True
 
     show trebble gun at left
-    trebble "You realize you don’t always have those sumbitches to fight with your old ass sword?"
 
-    trebble "(pulls out the glock) This would do a better job!"
-
-    $ has_gun = True
-    
     # Show egg and player feels compelled to take it
     # show egg_by_side 
+    play sound "audio/egg_effect.mp3"
     "Suddenly, you feel a pull towards the egg and pocket it."
     trebble "Quite the trinket, eh? Just don’t want it hatching on you! Wouldn’t mind one myself."
 
@@ -296,14 +284,20 @@ label start:
     if result == "bargain":
         $ coins += 10  # Add 10 coins
         "[player_name] received 10 coins!"
+        trebble "You've got yourself a deal! Good making business for ya"
+        "Turning away, you join the others and trudge back to the colony."
     if result == "refuse":
-        trebble "usdnoaun"
+        trebble "Damn it, I'll just get one of those shiny eggs myself 1 day"
+        play sound "audio/punch.mp3"
+        "Trebble punches you to take the egg from you"
+        trebble "PSYCH didnt think Id let an opportunity like that pass by did ya"
+        "Turning away, sad, you join the others and trudge back to the colony."
 
     # show screen map_icon_screen
 
     # $ show_map_icon = True  # Make the map icon visible
 
-    "Turning away, you join the others and trudge back to the colony."
+   
     scene bg room with dissolve
     "You enter your room, a simple bed. Home sweet home."
 
@@ -317,5 +311,6 @@ label start:
     "Opening the cracked egg, a leathery parchment falls out. A ripped map."
     "On one side, ‘Stralis’, on the other, a red and green heart."
 
+    # add credits
     # Transition to the next part of the game or story
     return

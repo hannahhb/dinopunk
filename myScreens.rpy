@@ -11,7 +11,7 @@ screen mapScreen:
         action Jump("west")
 
     imagebutton:
-        xpos 490
+        xpos 492
         ypos 355
         idle "blank"
         hover "melb_3"
