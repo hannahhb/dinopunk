@@ -244,9 +244,7 @@ label start:
 
         "The khopesh strikes the Megalania, sinking deep into its neck."
         
-        show trebble gun at left
-        trebble "You realize you don’t always have to fight with your old ass sword?"
-
+       
         show red_flash
         "Megalania falls to the ground, strikes YOU then scurries away."
         trebble "It’s gone! Destroy the nest before it comes back."
@@ -271,10 +269,14 @@ label start:
         # Hide the fire image
         hide dying_a
         trebble "naoiusniuaodnosanbdioa"
-
+        
+    hide megalania 
     if result == "run":
         trebble "naoiusniuaodnosanbdioa"
-    
+
+    show trebble gun at left
+    trebble "You realize you don’t always have those sumbitches to fight with your old ass sword?"
+
     trebble "(pulls out the glock) This would do a better job!"
 
     $ has_gun = True

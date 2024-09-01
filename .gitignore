@@ -1,8 +1,8 @@
-/images
-/videos
-/audio
-/gui
-*.png
-*.mp3
-*.webp
-*.webm
+# /images
+# /videos
+# /audio
+# /gui
+# *.png
+# *.mp3
+# *.webp
+# *.webm
