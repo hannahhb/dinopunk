@@ -189,13 +189,13 @@ label start:
     scene bg melbournex_ruins
     with fade
 
-    n "This is where your story begins, in the ruins of Melbourne..."
+    n "This is where your story begins, in the ruins of Melbourne.... or as it is now known .... MELNAAX"
 
     # Ask for the player's name
-    $ player_name = renpy.input("What is your name, survivor of Melbourne?")
+    $ player_name = renpy.input("What is your name, survivor of --Melnaax--?")
     show trebble rest at trebble_left_large
 
-    trebble "Welcome to the new world, [player_name]. Your journey in the remains of Melbourne starts now."
+    trebble "Welcome to the new world, [player_name]. Your journey in the remains of Melnaax starts now."
     show screen progress_bar_screen
     show screen weapon_hud
 
@@ -269,15 +269,12 @@ label start:
         show dying_a at trebble_left_large
         pause 3
         # Hide the fire image
-        show dying_a
+        hide dying_a
         trebble "naoiusniuaodnosanbdioa"
 
     if result == "run":
         trebble "naoiusniuaodnosanbdioa"
     
-    
-
-
     trebble "(pulls out the glock) This would do a better job!"
 
     $ has_gun = True
@@ -312,7 +309,7 @@ label start:
     call screen mapScreen
     # play sound "audio/dinosaur_roar.mp3"
     # player moves outside to overgrown_city
-    # 
+    
     
     # show cracked_egg_open with dissolve
     "Opening the cracked egg, a leathery parchment falls out. A ripped map."
