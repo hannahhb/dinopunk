@@ -229,14 +229,7 @@ label start:
         show khopesh_sword at swirl_move
         "The khopesh strikes the Megalania, sinking deep into its neck."
         
-    if result == "call_help":
-        play audio "audio/Uuhhh.oga"
-        $ population -= 2
-        trebble "Oof that was a battle and a half may those poor souls find some redemption"
-        show dying_a at trebble_left_large
-        pause 3
-        # Hide the fire image
-        hide dying_a
+    
 
     if result == "run":
 
@@ -248,9 +241,19 @@ label start:
         return 
 
     hide megalania
-    
+    $ renpy.movie_cutscene("videos/flash_red.webm")
     show red_flash
-    "Megalania falls to the ground, strikes YOU then scurries away."
+
+    if result == "call_help":
+        play audio "audio/Uuhhh.oga"
+        $ population -= 2
+        trebble "Oof that was a battle and a half may those poor souls find some redemption"
+        show dying_a at trebble_left_large
+        pause 3
+        # Hide the fire image
+        hide dying_a
+
+    "Megalania falls to the ground, strikes YOU then scurries away."    
     trebble "It’s gone! Destroy the nest before it comes back."
     
     play sound "audio/fire_effect.mp3"
@@ -297,7 +300,7 @@ label start:
 
     # $ show_map_icon = True  # Make the map icon visible
 
-   
+
     scene bg room with dissolve
     "You enter your room, a simple bed. Home sweet home."
 
